@@ -1,6 +1,7 @@
 
-// import { useState } from "react";
-// import { TextField, Button } from "@mui/material";
+// import React, { useState } from "react";
+// import axios from "axios";
+// import { TextField, Button, Snackbar, Alert } from "@mui/material";
 // import SendIcon from "@mui/icons-material/Send";
 // import PersonIcon from "@mui/icons-material/Person";
 // import EmailIcon from "@mui/icons-material/Email";
@@ -12,15 +13,41 @@
 //     email: "",
 //     message: "",
 //   });
+//   const [status, setStatus] = useState({
+//     open: false,
+//     message: "",
+//     severity: "success"
+//   });
 
 //   const handleChange = (e) => {
 //     const { name, value } = e.target;
 //     setFormData((prevData) => ({ ...prevData, [name]: value }));
 //   };
 
-//   const handleSubmit = (e) => {
+//   const handleSubmit = async (e) => {
 //     e.preventDefault();
-//     console.log("Form submitted:", formData);
+//     try {
+//       const response = await axios.post('http://localhost:5000/api/contact', formData);
+      
+//       setStatus({
+//         open: true,
+//         message: response.data.message,
+//         severity: "success"
+//       });
+      
+//       // Reset form after successful submission
+//       setFormData({ name: "", email: "", message: "" });
+//     } catch (error) {
+//       setStatus({
+//         open: true,
+//         message: error.response?.data?.message || "Failed to send message",
+//         severity: "error"
+//       });
+//     }
+//   };
+
+//   const handleCloseSnackbar = () => {
+//     setStatus({ ...status, open: false });
 //   };
 
 //   return (
@@ -30,60 +57,61 @@
 //         onSubmit={handleSubmit}
 //         className="max-w-lg mx-auto bg-gradient-to-br from-gray-800 to-gray-900 p-8 shadow-2xl rounded-lg"
 //       >
-        // <div className="mb-6">
-        //   <div className="flex items-center gap-2 mb-2 text-white">
-        //     <PersonIcon className="text-blue-400" />
-        //     <label className="font-semibold">Name</label>
-        //   </div>
-        //   <TextField
-        //     variant="outlined"
-        //     fullWidth
-        //     name="name"
-        //     value={formData.name}
-        //     onChange={handleChange}
-        //     placeholder="Enter your name"
-        //     InputProps={{
-        //       style: { backgroundColor: "#ffffff", borderRadius: "8px" },
-        //     }}
-        //   />
-        // </div>
-        // <div className="mb-6">
-        //   <div className="flex items-center gap-2 mb-2 text-white">
-        //     <EmailIcon className="text-blue-400" />
-        //     <label className="font-semibold">Email</label>
-        //   </div>
-        //   <TextField
-        //     type="email"
-        //     variant="outlined"
-        //     fullWidth
-        //     name="email"
-        //     value={formData.email}
-        //     onChange={handleChange}
-        //     placeholder="Enter your email"
-        //     InputProps={{
-        //       style: { backgroundColor: "#ffffff", borderRadius: "8px" },
-        //     }}
-        //   />
-        // </div>
-        // <div className="mb-6">
-        //   <div className="flex items-center gap-2 mb-2 text-white">
-        //     <MessageIcon className="text-blue-400" />
-        //     <label className="font-semibold">Message</label>
-        //   </div>
-        //   <TextField
-        //     variant="outlined"
-        //     fullWidth
-        //     multiline
-        //     rows={4}
-        //     name="message"
-        //     value={formData.message}
-        //     onChange={handleChange}
-        //     placeholder="Enter your message"
-        //     InputProps={{
-        //       style: { backgroundColor: "#ffffff", borderRadius: "8px" },
-        //     }}
-        //   />
-        // </div>
+//         {/* [Previous TextField components remain the same] */}
+//         <div className="mb-6">
+//           <div className="flex items-center gap-2 mb-2 text-white">
+//             <PersonIcon className="text-blue-400" />
+//             <label className="font-semibold">Name</label>
+//           </div>
+//           <TextField
+//             variant="outlined"
+//             fullWidth
+//             name="name"
+//             value={formData.name}
+//             onChange={handleChange}
+//             placeholder="Enter your name"
+//             InputProps={{
+//               style: { backgroundColor: "#ffffff", borderRadius: "8px" },
+//             }}
+//           />
+//         </div>
+//         <div className="mb-6">
+//           <div className="flex items-center gap-2 mb-2 text-white">
+//             <EmailIcon className="text-blue-400" />
+//             <label className="font-semibold">Email</label>
+//           </div>
+//           <TextField
+//             type="email"
+//             variant="outlined"
+//             fullWidth
+//             name="email"
+//             value={formData.email}
+//             onChange={handleChange}
+//             placeholder="Enter your email"
+//             InputProps={{
+//               style: { backgroundColor: "#ffffff", borderRadius: "8px" },
+//             }}
+//           />
+//         </div>
+//         <div className="mb-6">
+//           <div className="flex items-center gap-2 mb-2 text-white">
+//             <MessageIcon className="text-blue-400" />
+//             <label className="font-semibold">Message</label>
+//           </div>
+//           <TextField
+//             variant="outlined"
+//             fullWidth
+//             multiline
+//             rows={4}
+//             name="message"
+//             value={formData.message}
+//             onChange={handleChange}
+//             placeholder="Enter your message"
+//             InputProps={{
+//               style: { backgroundColor: "#ffffff", borderRadius: "8px" },
+//             }}
+//           />
+//         </div>
 //         <Button
 //           type="submit"
 //           fullWidth
@@ -99,6 +127,20 @@
 //           Send Message
 //         </Button>
 //       </form>
+      
+//       <Snackbar 
+//         open={status.open} 
+//         autoHideDuration={6000} 
+//         onClose={handleCloseSnackbar}
+//       >
+//         <Alert 
+//           onClose={handleCloseSnackbar} 
+//           severity={status.severity} 
+//           sx={{ width: '100%' }}
+//         >
+//           {status.message}
+//         </Alert>
+//       </Snackbar>
 //     </section>
 //   );
 // };
@@ -106,11 +148,23 @@
 // export default Contact;
 import React, { useState } from "react";
 import axios from "axios";
-import { TextField, Button, Snackbar, Alert } from "@mui/material";
+import { 
+  TextField, 
+  Button, 
+  Snackbar, 
+  Alert,
+  Paper,
+  Typography,
+  Box,
+  Container, 
+  Divider,
+  CircularProgress
+} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import PersonIcon from "@mui/icons-material/Person";
-import EmailIcon from "@mui/icons-material/Email";
-import MessageIcon from "@mui/icons-material/Message";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import { alpha } from "@mui/material/styles";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -123,6 +177,7 @@ const Contact = () => {
     message: "",
     severity: "success"
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -131,6 +186,8 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    
     try {
       const response = await axios.post('http://localhost:5000/api/contact', formData);
       
@@ -148,6 +205,8 @@ const Contact = () => {
         message: error.response?.data?.message || "Failed to send message",
         severity: "error"
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -155,98 +214,163 @@ const Contact = () => {
     setStatus({ ...status, open: false });
   };
 
+  const inputStyles = {
+    "& .MuiOutlinedInput-root": {
+      backgroundColor: alpha("#ffffff", 0.9),
+      borderRadius: "12px",
+      transition: "all 0.3s ease",
+      "&:hover": {
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
+      },
+      "&.Mui-focused": {
+        boxShadow: "0 6px 16px rgba(37, 117, 252, 0.2)",
+      }
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "rgba(255, 255, 255, 0.1)",
+    },
+    "& .MuiInputLabel-root": {
+      color: "white",
+    }
+  };
+
   return (
-    <section id="contact" className="container mx-auto my-20 px-4">
+    <Container maxWidth="lg" sx={{ py: 10 }}
+    id="contact">
+      <Box component="section" id="contact">
       <h2 className="text-4xl font-bold text-center mb-10 text-white">Get In Touch</h2>
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-lg mx-auto bg-gradient-to-br from-gray-800 to-gray-900 p-8 shadow-2xl rounded-lg"
-      >
-        {/* [Previous TextField components remain the same] */}
-        <div className="mb-6">
-          <div className="flex items-center gap-2 mb-2 text-white">
-            <PersonIcon className="text-blue-400" />
-            <label className="font-semibold">Name</label>
-          </div>
-          <TextField
-            variant="outlined"
-            fullWidth
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter your name"
-            InputProps={{
-              style: { backgroundColor: "#ffffff", borderRadius: "8px" },
-            }}
-          />
-        </div>
-        <div className="mb-6">
-          <div className="flex items-center gap-2 mb-2 text-white">
-            <EmailIcon className="text-blue-400" />
-            <label className="font-semibold">Email</label>
-          </div>
-          <TextField
-            type="email"
-            variant="outlined"
-            fullWidth
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-            InputProps={{
-              style: { backgroundColor: "#ffffff", borderRadius: "8px" },
-            }}
-          />
-        </div>
-        <div className="mb-6">
-          <div className="flex items-center gap-2 mb-2 text-white">
-            <MessageIcon className="text-blue-400" />
-            <label className="font-semibold">Message</label>
-          </div>
-          <TextField
-            variant="outlined"
-            fullWidth
-            multiline
-            rows={4}
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            placeholder="Enter your message"
-            InputProps={{
-              style: { backgroundColor: "#ffffff", borderRadius: "8px" },
-            }}
-          />
-        </div>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          endIcon={<SendIcon />}
-          className="text-white font-bold py-2 px-4 rounded-md"
-          style={{
-            backgroundImage: "linear-gradient(to right, #6a11cb, #2575fc)",
-            borderRadius: "8px",
+        
+        <Paper
+          elevation={24}
+          sx={{
+            maxWidth: "550px",
+            mx: "auto",
+            background: "linear-gradient(145deg, #1e293b, #111827)",
+            borderRadius: "16px",
+            overflow: "hidden",
+            p: { xs: 3, sm: 5 },
+            border: "1px solid rgba(255, 255, 255, 0.05)",
           }}
         >
-          Send Message
-        </Button>
-      </form>
-      
-      <Snackbar 
-        open={status.open} 
-        autoHideDuration={6000} 
-        onClose={handleCloseSnackbar}
-      >
-        <Alert 
-          onClose={handleCloseSnackbar} 
-          severity={status.severity} 
-          sx={{ width: '100%' }}
+          <Typography 
+            variant="h6" 
+            component="h3" 
+            sx={{ 
+              mb: 4, 
+              color: "white", 
+              fontWeight: 500,
+              textAlign: "center" 
+            }}
+          >
+            Send Me Message
+          </Typography>
+          
+          <Divider sx={{ mb: 4, opacity: 0.2 }} />
+          
+          <Box component="form" onSubmit={handleSubmit}>
+            <Box sx={{ mb: 3 }}>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 1.5 }}>
+                <PersonOutlineOutlinedIcon sx={{ mr: 1, color: "#2575fc" }} />
+                <Typography variant="body2" sx={{ color: "white", fontWeight: 500 }}>
+                  Full Name
+                </Typography>
+              </Box>
+              <TextField
+                variant="outlined"
+                fullWidth
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your name"
+                required
+                sx={inputStyles}
+              />
+            </Box>
+            
+            <Box sx={{ mb: 3 }}>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 1.5 }}>
+                <AlternateEmailOutlinedIcon sx={{ mr: 1, color: "#2575fc" }} />
+                <Typography variant="body2" sx={{ color: "white", fontWeight: 500 }}>
+                  Email Address
+                </Typography>
+              </Box>
+              <TextField
+                type="email"
+                variant="outlined"
+                fullWidth
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                required
+                sx={inputStyles}
+              />
+            </Box>
+            
+            <Box sx={{ mb: 4 }}>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 1.5 }}>
+                <ChatBubbleOutlineOutlinedIcon sx={{ mr: 1, color: "#2575fc" }} />
+                <Typography variant="body2" sx={{ color: "white", fontWeight: 500 }}>
+                  Your Message
+                </Typography>
+              </Box>
+              <TextField
+                variant="outlined"
+                fullWidth
+                multiline
+                rows={5}
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="How can we help you?"
+                required
+                sx={inputStyles}
+              />
+            </Box>
+            
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              disabled={loading}
+              startIcon={loading ? <CircularProgress size={20} /> : <SendIcon />}
+              sx={{
+                py: 1.5,
+                background: "linear-gradient(90deg, #6a11cb, #2575fc)",
+                borderRadius: "12px",
+                textTransform: "none",
+                fontWeight: 600,
+                fontSize: "1rem",
+                boxShadow: "0 10px 20px rgba(106, 17, 203, 0.2)",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  boxShadow: "0 10px 25px rgba(106, 17, 203, 0.3)",
+                  transform: "translateY(-2px)",
+                },
+              }}
+            >
+              {loading ? "Sending..." : "Send Message"}
+            </Button>
+          </Box>
+        </Paper>
+        
+        <Snackbar 
+          open={status.open} 
+          autoHideDuration={6000} 
+          onClose={handleCloseSnackbar}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         >
-          {status.message}
-        </Alert>
-      </Snackbar>
-    </section>
+          <Alert 
+            onClose={handleCloseSnackbar} 
+            severity={status.severity} 
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            {status.message}
+          </Alert>
+        </Snackbar>
+      </Box>
+    </Container>
   );
 };
 

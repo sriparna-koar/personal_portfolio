@@ -76,13 +76,13 @@ const Header = () => {
             </text>
           </svg>
           <Box display="flex" alignItems="center" gap={2}>
-  <Image 
+  {/* <Image 
     src="/picture.png" 
     alt="Logo" 
     width={50} 
     height={50} 
     style={{ objectFit: 'contain' }} 
-  />
+  /> */}
 </Box>
           {/* <Typography
             variant="h6"
