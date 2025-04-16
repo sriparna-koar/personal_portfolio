@@ -14,7 +14,7 @@ const Header = () => {
     // { label: 'Portfolio', icon: <Work />, href: '#portfolio' },
     { label: 'Skills', icon: <AccountCircle />, href: '#skills' },
     { label: 'Projects', icon:  <Work />, href: '#projects' },
-    { label: 'Education', icon: <School />, href: '#education' },
+    { label: 'Experience', icon: <School />, href: '#experience' },
     { label: 'Contact', icon: <ContactMail />, href: '#contact' },
   ];
 
