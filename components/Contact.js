@@ -42,7 +42,7 @@ const Contact = () => {
     setLoading(true);
     
     try {
-      const response = await axios.post('http://localhost:5000/api/contact', formData);
+      const response = await axios.post('https://personal-portfolio-gn3y.onrender.com/api/contact', formData);
       
       setStatus({
         open: true,
