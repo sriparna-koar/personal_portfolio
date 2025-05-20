@@ -47,11 +47,11 @@ const HeroSection = () => {
 
   const skills = [
     { icon: <Brain className="w-6 h-6" />, name: "Machine Learning" },
-    { icon: <Database className="w-6 h-6" />, name: "Data Science" },
-    { icon: <CodeSquare className="w-6 h-6" />, name: "AI Development" },
+    { icon: <Database className="w-6 h-6" />, name: "MongoDB" },
+    { icon: <CodeSquare className="w-6 h-6" />, name: "AI" },
     { icon: <Terminal className="w-6 h-6" />, name: "Deep Learning" },
-    { icon: <BarChart2 className="w-6 h-6" />, name: "Analytics" },
-    { icon: <Server className="w-6 h-6" />, name: "MLOps" }
+    { icon: <BarChart2 className="w-6 h-6" />, name: "Python" },
+    { icon: <Server className="w-6 h-6" />, name: "Full Stack Developer" }
   ];
 
   return (

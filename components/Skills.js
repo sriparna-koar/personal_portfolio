@@ -47,6 +47,7 @@ const Skills = () => {
         { name: "HTML", level: 95, icon: "📄" },
         { name: "CSS", level: 90, icon: "🎨" },
         { name: "React", level: 88, icon: "⚛️" },
+        { name: "Next", level: 89, icon: "⚛️" },
         { name: "Tailwind", level: 85, icon: "💨" }
       ],
       icon: "🎨"
